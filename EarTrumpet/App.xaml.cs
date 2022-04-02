@@ -46,9 +46,9 @@ namespace EarTrumpet
             _settings = new AppSettings();
             _errorReporter = new ErrorReporter(_settings);
 
-            if (SingleInstanceAppMutex.TakeExclusivity())
-            {
-                Exit += (_, __) => SingleInstanceAppMutex.ReleaseExclusivity();
+            //if (SingleInstanceAppMutex.TakeExclusivity())
+            //{
+            //    Exit += (_, __) => SingleInstanceAppMutex.ReleaseExclusivity();
 
                 try
                 {
@@ -59,11 +59,11 @@ namespace EarTrumpet
                     ErrorReporter.LogWarning(ex);
                     OnCriticalFontLoadFailure();
                 }
-            }
-            else
-            {
-                Shutdown();
-            }
+            //}
+            //else
+            //{
+            //    Shutdown();
+            //}
         }
 
         private void ContinueStartup()
