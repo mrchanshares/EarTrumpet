@@ -1,7 +1,7 @@
 ﻿using EarTrumpet.Extensions;
 using EarTrumpet.Interop.Helpers;
 using System;
-using System.Diagnostics;
+using System.Diagnostics; 
 using System.Windows;
 
 namespace EarTrumpet.UI.Views

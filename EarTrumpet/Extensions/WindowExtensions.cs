@@ -16,9 +16,13 @@ namespace EarTrumpet.Extensions
 
         public static void RaiseWindow(this Window window)
         {
-            window.Topmost = true;
+				// CC 0.5= 50%, 15%
+		//	window.Opacity = 0;
+
+			window.Topmost = true;
             window.Activate();
-            window.Topmost = false;
+			//CC
+            //window.Topmost = false;
         }
 
         public static void Cloak(this Window window, bool hide = true)

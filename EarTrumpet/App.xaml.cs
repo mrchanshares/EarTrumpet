@@ -96,8 +96,12 @@ namespace EarTrumpet
             _settingsWindow = new WindowHolder(CreateSettingsExperience);
 
             _settings.FlyoutHotkeyTyped += () => _flyoutViewModel.OpenFlyout(InputType.Keyboard);
-            _settings.MixerHotkeyTyped += () => _mixerWindow.OpenOrClose();
-            _settings.SettingsHotkeyTyped += () => _settingsWindow.OpenOrBringToFront();
+			//CC
+            //_settings.MixerHotkeyTyped += () => _mixerWindow.OpenOrClose();
+			_settings.MixerHotkeyTyped += () => _mixerWindow.ShowTopMost();
+
+
+			_settings.SettingsHotkeyTyped += () => _settingsWindow.OpenOrBringToFront();
             _settings.RegisterHotkeys();
 
             _trayIcon.PrimaryInvoke += (_, type) => _flyoutViewModel.OpenFlyout(type);
@@ -107,24 +111,31 @@ namespace EarTrumpet
             _trayIcon.SetTooltip(CollectionViewModel.GetTrayToolTip());
             _trayIcon.IsVisible = true;
 
-            DisplayFirstRunExperience();
-        }
+				// CC
+            //DisplayFirstRunExperience();
+
+			//CC
+			_mixerWindow.OpenOrClose();
+			_mixerWindow.OpenOrBringToFront();
+
+		}
 
         private void DisplayFirstRunExperience()
         {
-            if (!_settings.HasShownFirstRun
-#if DEBUG
-                || Keyboard.IsKeyDown(Key.LeftCtrl)
-#endif
-                )
-            {
-                Trace.WriteLine($"App DisplayFirstRunExperience Showing welcome dialog");
-                _settings.HasShownFirstRun = true;
+//            if (!_settings.HasShownFirstRun
+//#if DEBUG
+//                || Keyboard.IsKeyDown(Key.LeftCtrl)
+//#endif
+//                )
+//            {
+                //Trace.WriteLine($"App DisplayFirstRunExperience Showing welcome dialog");
+				// CC
+                //_settings.HasShownFirstRun = true;
 
                 var dialog = new DialogWindow { DataContext = new WelcomeViewModel(_settings) };
                 dialog.Show();
                 dialog.RaiseWindow();
-            }
+            //}
         }
 
         private bool IsCriticalFontLoadFailure(Exception ex)
@@ -201,7 +212,9 @@ namespace EarTrumpet
 
             ret.AddRange(new List<ContextMenuItem>
                 {
-                    new ContextMenuItem { DisplayName = EarTrumpet.Properties.Resources.FullWindowTitleText, Command = new RelayCommand(_mixerWindow.OpenOrBringToFront) },
+				 //new ContextMenuItem { DisplayName = EarTrumpet.Properties.Resources.FullWindowTitleText, Command = new RelayCommand(_mixerWindow.OpenOrBringToFront) },
+
+					new ContextMenuItem { DisplayName = EarTrumpet.Properties.Resources.FullWindowTitleText, Command = new RelayCommand(_mixerWindow.ShowTopMost) },
                     new ContextMenuItem { DisplayName = EarTrumpet.Properties.Resources.SettingsWindowText, Command = new RelayCommand(_settingsWindow.OpenOrBringToFront) },
                     new ContextMenuItem { DisplayName = EarTrumpet.Properties.Resources.ContextMenuExitTitle, Command = new RelayCommand(Shutdown) },
                 });

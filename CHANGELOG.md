@@ -1,5 +1,15 @@
 # Changelog
 
+## fork on mrchanshares / EarTrumpet
+	- in progress
+	split volume bar into left and right channel
+
+    make mixer window transparent (may not work as expected)
+   
+	- done
+	make mixer window topmost (done)
+	
+
 ## 2.1.10.0
 - Flyout now remembers if it was expanded/collapsed between launches (thanks @Tester798!)
 - Fixed an issue with the flyout open animation behaving erratically with some mice

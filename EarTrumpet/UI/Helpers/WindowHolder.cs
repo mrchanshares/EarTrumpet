@@ -12,9 +12,17 @@ namespace EarTrumpet.UI.Helpers
         public WindowHolder(Func<Window> create)
         {
             _create = create;
+		
         }
 
-        public void OpenOrClose()
+		//CC
+		public void ShowTopMost()
+		{
+			OpenOrClose();
+			OpenOrBringToFront();
+		}
+
+		public void OpenOrClose()
         {
             if (_openWindow == null)
             {
@@ -44,7 +52,8 @@ namespace EarTrumpet.UI.Helpers
             _openWindow = _create();
             _openWindow.Closed += (_, __) => _openWindow = null;
             _openWindow.Show();
-            WindowAnimationLibrary.BeginWindowEntranceAnimation(_openWindow, () => { });
+			
+			WindowAnimationLibrary.BeginWindowEntranceAnimation(_openWindow, () => { });
         }
     }
 }
