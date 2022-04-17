@@ -19,16 +19,24 @@ namespace EarTrumpet.DataModel.WindowsAudio.Internal
                 var buckets = new List<List<IAudioDeviceSessionChannel>>();
                 foreach(var session in _sessions)
                 {
-                    var sessionChannels = session.Channels.ToList();
-                    for (var i = 0; i < sessionChannels.Count; i++)
-                    {
-                        if (buckets.Count <= i)
-                        {
-                            buckets.Add(new List<IAudioDeviceSessionChannel>());
-                        }
 
-                        buckets[i].Add(sessionChannels[i]);
-                    }
+					//CC
+					System.Diagnostics.Trace.WriteLine($"AddSession Create " + session.DisplayName);
+
+					if (session.DisplayName == "Apex Legends")
+					{
+
+						var sessionChannels = session.Channels.ToList();
+						for (var i = 0; i < sessionChannels.Count; i++)
+						{
+							if (buckets.Count <= i)
+							{
+								buckets.Add(new List<IAudioDeviceSessionChannel>());
+							}
+
+							buckets[i].Add(sessionChannels[i]);
+						}
+					}
                 }
 
                 var ret = new List<IAudioDeviceSessionChannel>();
@@ -161,7 +169,9 @@ namespace EarTrumpet.DataModel.WindowsAudio.Internal
             GroupingParam = ((IAudioDeviceSessionInternal)session).GroupingParam; // can change at runtime
             AppId = session.AppId;
 
-            AddSession(session);
+			
+				AddSession(session);
+			 
         }
 
         ~AudioDeviceSessionGroup()
@@ -178,13 +188,13 @@ namespace EarTrumpet.DataModel.WindowsAudio.Internal
             {
                 _id = session.Id;
             }
+			
+				_sessions.Add(session);
+				session.PropertyChanged += Session_PropertyChanged;
 
-            _sessions.Add(session);
+				// Inherit properties (safely) from existing streams
+				session.IsMuted = _sessions[0].IsMuted || session.IsMuted;
 
-            session.PropertyChanged += Session_PropertyChanged;
-
-            // Inherit properties (safely) from existing streams
-            session.IsMuted = _sessions[0].IsMuted || session.IsMuted;
         }
 
         public void RemoveSession(IAudioDeviceSession session)

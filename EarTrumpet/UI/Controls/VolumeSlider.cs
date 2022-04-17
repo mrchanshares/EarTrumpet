@@ -26,6 +26,10 @@ namespace EarTrumpet.UI.Controls
 
         private Border _peakMeter1;
         private Border _peakMeter2;
+		// CC
+		public float displayValue1;
+		public float displayValue2;
+
         private Thumb _thumb;
         private Point _lastMousePosition;
 
@@ -62,14 +66,29 @@ namespace EarTrumpet.UI.Controls
 
         private void SizeOrVolumeOrPeakValueChanged()
         {
+				//CC
+			if (PeakValue1 > PeakValue2 )
+			{
+				displayValue1 =PeakValue1 ;
+				displayValue2 =0  ;
+			}  
+			else{
+				displayValue1 =0 ;
+				displayValue2 =PeakValue2  ;
+			}
+
             if (_peakMeter1 != null)
             {
-                _peakMeter1.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * PeakValue1 * (Value / 100f));
+					//CC
+            //     _peakMeter1.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * PeakValue1 * (Value / 100f));
+				 _peakMeter1.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * displayValue1 * (Value / 100f));
             }
 
             if (_peakMeter2 != null)
             {
-                _peakMeter2.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * PeakValue2 * (Value / 100f));
+				//CC
+             //   _peakMeter2.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * PeakValue2 * (Value / 100f));
+				 _peakMeter2.Width = Math.Max(0, (ActualWidth - _thumb.ActualWidth) * displayValue2 * (Value / 100f));
             }
         }
 

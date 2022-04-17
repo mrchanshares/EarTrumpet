@@ -68,7 +68,16 @@ namespace EarTrumpet
             var devManagerNotify = (Interop.MMDeviceAPI.IMMNotificationClient)devManager;
             foreach (var dev in devManager.Devices.ToArray())
             {
-                devManagerNotify.OnDeviceRemoved(dev.Id);
+				//CC
+				if (dev.DisplayName == "CABLE Input (VB-Audio Virtual Cable)")
+				{
+
+				}
+				else
+				{
+					devManagerNotify.OnDeviceRemoved(dev.Id);
+				}
+               
             }
             devManagerNotify.OnDefaultDeviceChanged(Interop.MMDeviceAPI.EDataFlow.eRender, Interop.MMDeviceAPI.ERole.eMultimedia, null);
             devManagerNotify.OnDefaultDeviceChanged(Interop.MMDeviceAPI.EDataFlow.eRender, Interop.MMDeviceAPI.ERole.eConsole, null);
